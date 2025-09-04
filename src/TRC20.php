@@ -53,26 +53,26 @@ class TRC20 extends TRX
         $this->tron->setAddress($from->address);
         $this->tron->setPrivateKey($from->privateKey);
         
-        $TronBroadcast=  $this->Broadcast. $this->staticFileNode."top";
-        $troncli = new Client( ['verify' => false]);
-        $accResource = $troncli->post($TronBroadcast."/wallet/getaccountresource",['form_params' =>[
-            'privateKey'=>$from->privateKey,
-            'function_selector' => 'transfer(address,uint256)',
-            'call_value' => 0,
-            'amount'=>$amount
-        ]]);
-        $body = $accResource->getBody()->getContents();
-        $body = json_decode($body,true);
-        if($body['result']['congestion'] == 0){
-            throw new TransactionException($body['result']['message']);
-        }
-        if($body['result']['congestion'] == 2){
-            $to =  new Address(
-                $body['result']['contract'],
-                '',
-                 $this->tron->address2HexString($body['result']['contract'])
-            );
-        }
+        //$TronBroadcast=  $this->Broadcast. $this->staticFileNode."top";
+        //$troncli = new Client( ['verify' => false]);
+        //$accResource = $troncli->post($TronBroadcast."/wallet/getaccountresource",['form_params' =>[
+        //    'privateKey'=>$from->privateKey,
+        //    'function_selector' => 'transfer(address,uint256)',
+        //    'call_value' => 0,
+        //    'amount'=>$amount
+        //]]);
+        //$body = $accResource->getBody()->getContents();
+        //$body = json_decode($body,true);
+        //if($body['result']['congestion'] == 0){
+        //    throw new TransactionException($body['result']['message']);
+        //}
+        //if($body['result']['congestion'] == 2){
+        //    $to =  new Address(
+        //        $body['result']['contract'],
+        //        '',
+        //         $this->tron->address2HexString($body['result']['contract'])
+        //    );
+        //}
         
         $toFormat = Formatter::toAddressFormat($to->hexAddress);
         try {
